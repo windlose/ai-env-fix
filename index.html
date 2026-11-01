@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Windows 上把 AI 工具装通 · 远程协助</title>
+<meta name="description" content="Windows 上安装配置 AI 编程工具、修复插件与依赖问题。远程协助，装不好不收费。">
+<style>
+  :root{
+    --paper:#fcfcfa;
+    --ink:#16181a;
+    --ink-mid:#4a4f55;
+    --ink-dim:#7c8288;
+    --rule:#e2e0da;
+    --accent:#1a4f8a;
+    --accent-soft:#eef3f9;
+    --mono:"JetBrains Mono",Consolas,"SF Mono",monospace;
+    --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--sans);font-size:16.5px;line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 24px}
+
+  header{padding:72px 0 0}
+  h1{
+    font-size:clamp(28px,5.2vw,40px);line-height:1.25;letter-spacing:-.02em;
+    font-weight:800;margin:0 0 20px;text-wrap:balance;
+  }
+  .sub{font-size:18px;color:var(--ink-mid);margin:0 0 32px;max-width:46ch}
+  .contact{
+    border-left:3px solid var(--accent);padding:2px 0 2px 16px;margin:0 0 12px;
+    font-size:15px;color:var(--ink-mid);
+  }
+  .contact b{color:var(--ink);font-weight:600}
+  .contact .fill{
+    background:var(--accent-soft);color:var(--accent);
+    padding:1px 6px;border-radius:2px;font-family:var(--mono);font-size:14px;
+  }
+
+  h2{
+    font-size:15px;font-weight:700;letter-spacing:.02em;color:var(--ink);
+    margin:64px 0 6px;padding-top:24px;border-top:1px solid var(--rule);
+  }
+  h2 .n{color:var(--ink-dim);font-family:var(--mono);font-weight:400;margin-right:10px;font-size:13px}
+  .hint{color:var(--ink-dim);font-size:14px;margin:0 0 22px}
+
+  ul.sym{list-style:none;margin:0;padding:0}
+  ul.sym li{
+    padding:11px 0 11px 26px;border-bottom:1px solid var(--rule);position:relative;
+    color:var(--ink-mid);font-size:15.5px;
+  }
+  ul.sym li:last-child{border-bottom:0}
+  ul.sym li::before{
+    content:'';position:absolute;left:2px;top:22px;width:7px;height:7px;
+    border-radius:50%;background:var(--accent);opacity:.55;
+  }
+  ul.sym li b{color:var(--ink);font-weight:600}
+
+  ol.steps{list-style:none;counter-reset:s;margin:0;padding:0}
+  ol.steps li{
+    counter-increment:s;position:relative;padding:0 0 20px 40px;
+    color:var(--ink-mid);font-size:15.5px;
+  }
+  ol.steps li::before{
+    content:counter(s);position:absolute;left:0;top:2px;
+    font-family:var(--mono);font-size:13px;color:var(--accent);
+    width:24px;height:24px;border:1px solid var(--accent);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+  }
+  ol.steps li b{display:block;color:var(--ink);font-weight:600;margin-bottom:2px}
+
+  table{width:100%;border-collapse:collapse;font-size:15.5px}
+  th,td{text-align:left;padding:13px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+  th{font-size:12.5px;font-weight:600;color:var(--ink-dim);letter-spacing:.04em}
+  td.p{font-family:var(--mono);white-space:nowrap;color:var(--ink);font-weight:600}
+  td.d{color:var(--ink-mid);font-size:14.5px}
+  tr:last-child td{border-bottom:0}
+
+  .note{
+    background:var(--accent-soft);padding:18px 20px;margin:22px 0 0;
+    font-size:14.5px;color:var(--ink-mid);border-radius:2px;
+  }
+  .note b{color:var(--ink)}
+
+  .no li::before{background:var(--ink-dim);opacity:.4}
+
+  footer{
+    margin-top:64px;padding:28px 0 72px;border-top:1px solid var(--rule);
+    font-size:14px;color:var(--ink-dim);
+  }
+  footer a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-soft)}
+  footer a:hover{border-bottom-color:var(--accent)}
+
+  @media (max-width:560px){
+    body{font-size:16px}
+    header{padding-top:48px}
+    h2{margin-top:48px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>在 Windows 上把 AI 工具真正装通</h1>
+  <p class="sub">装好了但不工作、插件不显示、依赖装到一半、命令行拉不动 GitHub——这类问题，远程帮你解决。</p>
+  <p class="contact">联系：<span class="fill">微信号填这里</span> &nbsp;·&nbsp; 或发邮件 <span class="fill">邮箱填这里</span></p>
+  <p class="contact">远程方式：<b>向日葵 / ToDesk</b>，一般 30–60 分钟，装不好不收费。</p>
+</header>
+
+<h2><span class="n">01</span>能解决的问题</h2>
+<p class="hint">下面这些我这一年内都实际处理过，不是猜测。</p>
+<ul class="sym">
+  <li><b>node_modules 只装了一半</b>——显示安装成功，启动报 Cannot find module，目录里缺 package.json</li>
+  <li><b>插件装了但界面不显示</b>——依赖有、配置有、日志干净，就是没按钮（多半是 peer 版本上限被静默禁用）</li>
+  <li><b>双击图标一闪就没</b>——退出码 0、零报错，通常是环境变量把 Electron 当 Node 跑了</li>
+  <li><b>GitHub 拉取只有 2KB/s</b>——Release 被限速，需要分段并行下载并校验哈希</li>
+  <li><b>命令行解析不到 github 域名</b>——DNS 被污染，浏览器正常、命令行全挂</li>
+  <li><b>授权登录拿不到验证码</b>——设备码流程在后台进程里不打印提示</li>
+  <li><b>脚本一跑就报路径不存在</b>——PowerShell 5.1 用 ANSI 读文件，中文路径变乱码</li>
+  <li><b>服务起来了但功能是坏的</b>——健康检查通过不代表业务跑通，需要看产出物</li>
+</ul>
+
+<h2><span class="n">02</span>怎么进行</h2>
+<ol class="steps">
+  <li><b>先说现象</b>把报错原文贴过来，说明系统和工具版本。我判断能不能远程解决。</li>
+  <li><b>约时间远程</b>确认后约时间，你发起远程，我操作。需要授权的步骤（登录、输验证码）你自己点，我不碰你的密码。</li>
+  <li><b>装完验证</b>不看「服务在跑」，看产出物：能不能真正调通、能不能读到数据。给你一份排障笔记，以后自己也能查。</li>
+</ol>
+
+<h2><span class="n">03</span>价格</h2>
+<table>
+  <thead><tr><th>项目</th><th>价格</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>基础安装</td><td class="p">¥99</td><td class="d">单个工具装好并跑通，含依赖与基础配置</td></tr>
+    <tr><td>标准安装</td><td class="p">¥199</td><td class="d">工具 + 插件 + 模型接入，含一轮联调</td></tr>
+    <tr><td>深度排障</td><td class="p">¥299 起</td><td class="d">疑难问题，需要读日志、定位到源码层面</td></tr>
+    <tr><td>团队环境</td><td class="p">另议</td><td class="d">多台机器统一配置，或一次内训</td></tr>
+  </tbody>
+</table>
+<div class="note">
+  <b>装不好不收费。</b> 一周内同一问题复发免费看；更新版本导致装不上也算复发。
+</div>
+
+<h2><span class="n">04</span>不做的事</h2>
+<ul class="sym no">
+  <li>不装破解版、去广告版、来路不明的修改版</li>
+  <li>不代办账号注册、不代收付款、不碰你的密码和 API Key 明文</li>
+  <li>不做「刷量」「过检测」「批量注册」这类事</li>
+  <li>不是环境问题的不接（比如账号被封），会直接告诉你找谁</li>
+</ul>
+
+<h2><span class="n">05</span>为什么找我</h2>
+<p class="hint">
+  上面那些问题，绝大多数教程里没有——因为写教程的人用的是 macOS，或者在 Linux 服务器上。
+  Windows 上的失败方式很不一样：它不报错。退出码 0、日志干净、界面正常，功能是坏的。
+  这篇清单里的每一条，都是我自己的机器上真实踩过并修好的，修完都留了记录。
+</p>
+<p class="hint">
+  可以先看几篇我写的排错记录：<br>
+  · <a href="文章/01-Windows-AI环境避坑清单.md">Windows 上装 AI 开发环境，我踩过的 8 个坑</a><br>
+  · <a href="文章/02-node_modules装到一半.md">装到一半的 node_modules</a><br>
+  · <a href="文章/03-插件装了不显示.md">插件装了却不显示</a>
+</p>
+
+<footer>
+  问题先发过来，能修就说能修，不能修会直接讲。
+  <br>
+  <span style="font-family:var(--mono);font-size:12px">最后更新：2026-11-02</span>
+</footer>
+
+</div>
+</body>
+</html>
